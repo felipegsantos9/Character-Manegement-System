@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C.M.S. — Personagens</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+
+        <a href="../index.html" class="logo">
+            <span>C.M.S.</span>
+            <small>CHARACTER MANAGEMENT SYSTEM</small>
+        </a>
+
+        <nav>
+            <a href="../index.html">Início</a>
+            <a href="#personagens">Personagens</a>
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <section class="topo">
+
+            <div>
+                <span class="codigo">DATABASE // CHARACTER RECORDS</span>
+
+                <h1>PERSONAGENS</h1>
+
+                <p>
+                    Arquivo central contendo os registros disponíveis no
+                    sistema de gerenciamento de personagens.
+                </p>
+            </div>
+
+            <div class="informacoes">
+
+                <div>
+                    <span>STATUS</span>
+                    <strong>ONLINE</strong>
+                </div>
+
+                <div>
+                    <span>REGISTROS</span>
+                    <strong id="quantidade-registros">03</strong>
+                </div>
+
+                <div>
+                    <span>DATABASE</span>
+                    <strong>ACTIVE</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="personagens" id="personagens">
+
+            <div class="secao-topo">
+
+                <div>
+                    <span class="codigo">C.M.S. // ARCHIVE</span>
+                    <h2>Registros disponíveis</h2>
+                </div>
+
+                <span class="contador" id="contador-registros">
+                    03 REGISTROS
+                </span>
+
+            </div>
+
+
+            <div class="grid-personagens">
+
+
+                <a href="Fichas/Marcelo/index.html"
+                   class="card"
+                   data-personagem="marcelo">
+
+                    <div class="card-imagem">
+                        <img src="../Assets/Marcelo.jpg" alt="Marcelo Vauren Pereira">
+                    </div>
+
+                    <div class="card-conteudo">
+
+                        <span class="numero">MV-018</span>
+
+                        <h3>Marcelo Vauren Pereira</h3>
+
+                        <p>Amnésico • Humano</p>
+
+                        <div class="card-info">
+
+                            <div>
+                                <span>NÍVEL</span>
+                                <strong class="nivel">06</strong>
+                            </div>
+
+                            <div>
+                                <span>STATUS</span>
+                                <strong>ATIVO</strong>
+                            </div>
+
+                        </div>
+
+                        <div class="ultimo-acesso">
+                            <span>ÚLTIMA ENTRADA</span>
+                            <strong class="acesso">Nunca acessado</strong>
+                        </div>
+
+                        <div class="acessar">
+                            <span>ACESSAR FICHA</span>
+                            <strong>→</strong>
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <a href="Fichas/Kylie/index.html"
+                   class="card"
+                   data-personagem="kylie">
+
+                    <div class="card-imagem">
+                        <img src="../Assets/Kylie.jpg" alt="Kylie">
+                    </div>
+
+                    <div class="card-conteudo">
+
+                        <span class="numero">KY-???</span>
+
+                        <h3>Kylie</h3>
+
+                        <p>Personagem • Registro</p>
+
+                        <div class="card-info">
+
+                            <div>
+                                <span>NÍVEL</span>
+                                <strong class="nivel">01</strong>
+                            </div>
+
+                            <div>
+                                <span>STATUS</span>
+                                <strong>ATIVO</strong>
+                            </div>
+
+                        </div>
+
+                        <div class="ultimo-acesso">
+                            <span>ÚLTIMA ENTRADA</span>
+                            <strong class="acesso">Nunca acessado</strong>
+                        </div>
+
+                        <div class="acessar">
+                            <span>ACESSAR FICHA</span>
+                            <strong>→</strong>
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <a href="Fichas/Gabrielly/index.html"
+                   class="card"
+                   data-personagem="gabrielly">
+
+                    <div class="card-imagem">
+                        <img src="../Assets/Gabrielly.jpg" alt="Gabrielly">
+                    </div>
+
+                    <div class="card-conteudo">
+
+                        <span class="numero">GB-016</span>
+
+                        <h3>Gabrielly</h3>
+
+                        <p>Wendigo • Registro</p>
+
+                        <div class="card-info">
+
+                            <div>
+                                <span>NÍVEL</span>
+                                <strong class="nivel">01</strong>
+                            </div>
+
+                            <div>
+                                <span>STATUS</span>
+                                <strong>ATIVO</strong>
+                            </div>
+
+                        </div>
+
+                        <div class="ultimo-acesso">
+                            <span>ÚLTIMA ENTRADA</span>
+                            <strong class="acesso">Nunca acessado</strong>
+                        </div>
+
+                        <div class="acessar">
+                            <span>ACESSAR FICHA</span>
+                            <strong>→</strong>
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <span>C.M.S. DATABASE</span>
+
+        <span>CHARACTER MANAGEMENT SYSTEM</span>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

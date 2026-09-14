@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcelo Vauren Pereira — C.M.S.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+    <a href="../../../Personagens/index.html" class="logo">C.M.S.</a>
+
+    <div class="topbar-direita">
+        <span>CHARACTER MANAGEMENT SYSTEM</span>
+        <a href="../../../Personagens/index.html">VOLTAR</a>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="perfil">
+        <div class="foto-area">
+            <img src="../../../Assets/Marcelo.jpg" alt="Marcelo Vauren Pereira">
+            <span class="status">ATIVO</span>
+        </div>
+
+        <div class="identidade">
+            <span class="categoria">REGISTRO DE PERSONAGEM</span>
+            <h1>Marcelo Vauren Pereira</h1>
+            <p>Marcelo • Celo • Torre Elétrica • Choquinho</p>
+
+            <div class="informacoes">
+                <div>
+                    <span>IDADE</span>
+                    <strong>18</strong>
+                </div>
+
+                <div>
+                    <span>ALTURA</span>
+                    <strong>1,76m</strong>
+                </div>
+
+                <div>
+                    <span>RAÇA</span>
+                    <strong>HUMANO</strong>
+                </div>
+
+                <div>
+                    <span>ORIGEM</span>
+                    <strong>AMNÉSICO</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="nivel-box">
+            <span>NÍVEL</span>
+            <strong id="nivel">07</strong>
+        </div>
+    </section>
+
+    <section class="recursos">
+        <div class="recurso pv">
+            <span>PV</span>
+
+            <div class="recurso-valor">
+                <input type="number" id="pv-atual" min="0" max="200">
+                <strong>/ 200</strong>
+            </div>
+        </div>
+
+        <div class="recurso">
+            <span>PE</span>
+
+            <div class="recurso-valor">
+                <input type="number" id="pe-atual" min="0" max="120">
+                <strong>/ 120</strong>
+            </div>
+        </div>
+
+        <div class="recurso">
+            <span>SAN</span>
+
+            <div class="recurso-valor">
+                <input type="number" id="san-atual" min="0" max="280">
+                <strong>/ 280</strong>
+            </div>
+        </div>
+
+        <div class="recurso">
+            <span>PM</span>
+
+            <div class="recurso-valor">
+                <input type="number" id="pm-atual" min="0" max="260">
+                <strong>/ 260</strong>
+            </div>
+        </div>
+
+        <div class="recurso xp">
+            <span>EXPERIÊNCIA</span>
+
+            <div class="recurso-valor">
+                <strong id="xp-atual">0</strong>
+                <small id="xp-necessario">/ 1250</small>
+            </div>
+
+            <div class="xp-controle">
+                <input type="number" id="xp-adicionar" placeholder="XP">
+                <button id="btn-xp">ADICIONAR</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="secao-titulo">
+            <span>ATRIBUTOS</span>
+            <h2>CARACTERÍSTICAS</h2>
+        </div>
+
+        <div class="atributos">
+
+            <button class="atributo" data-atributo="FOR">
+                <span>FOR</span>
+                <strong id="attr-FOR">3</strong>
+                <small>FORÇA</small>
+            </button>
+
+            <button class="atributo" data-atributo="AGI">
+                <span>AGI</span>
+                <strong id="attr-AGI">3</strong>
+                <small>AGILIDADE</small>
+            </button>
+
+            <button class="atributo" data-atributo="VIG">
+                <span>VIG</span>
+                <strong id="attr-VIG">2</strong>
+                <small>VIGOR</small>
+            </button>
+
+            <button class="atributo" data-atributo="PRE">
+                <span>PRE</span>
+                <strong id="attr-PRE">2</strong>
+                <small>PRESENÇA</small>
+            </button>
+
+            <button class="atributo" data-atributo="INT">
+                <span>INT</span>
+                <strong id="attr-INT">3</strong>
+                <small>INTELECTO</small>
+            </button>
+
+        </div>
+    </section>
+
+    <section class="defesas">
+        <div class="defesa-box">
+            <span>DEFESA</span>
+            <strong>65</strong>
+        </div>
+
+        <div class="defesa-box">
+            <span>ESQUIVA</span>
+            <strong>65</strong>
+        </div>
+
+        <div class="defesa-box">
+            <span>FORTITUDE</span>
+            <strong id="fortitude-valor">32</strong>
+        </div>
+
+        <div class="defesa-box">
+            <span>MAGIA</span>
+            <strong id="magia-valor">32</strong>
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="secao-titulo">
+            <span>PERÍCIAS</span>
+            <h2>HABILIDADES</h2>
+        </div>
+
+        <div class="pericias">
+
+            <button class="pericia" data-pericia="Acrobacia">
+                <span>Acrobacia</span>
+                <strong>AGI +5</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Alquimia">
+                <span>Alquimia</span>
+                <strong>INT +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Atletismo">
+                <span>Atletismo</span>
+                <strong>FOR +5</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Atualidades">
+                <span>Atualidades</span>
+                <strong>INT +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Adestramento">
+                <span>Adestramento</span>
+                <strong>PRE +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Artes">
+                <span>Artes</span>
+                <strong>PRE +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Crime">
+                <span>Crime</span>
+                <strong>AGI +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Ciências">
+                <span>Ciências</span>
+                <strong>INT +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Carisma">
+                <span>Carisma</span>
+                <strong>PRE +5</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Diplomacia">
+                <span>Diplomacia</span>
+                <strong>PRE +5</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Enganação">
+                <span>Enganação</span>
+                <strong>PRE +5</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Engenharia">
+                <span>Engenharia</span>
+                <strong>INT +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Furtividade">
+                <span>Furtividade</span>
+                <strong>AGI +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Fortitude">
+                <span>Fortitude</span>
+                <strong>VIG +32</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Iniciativa">
+                <span>Iniciativa</span>
+                <strong>AGI +3</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Investigação">
+                <span>Investigação</span>
+                <strong>INT +10</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Intimidação">
+                <span>Intimidação</span>
+                <strong>PRE +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Intuição">
+                <span>Intuição</span>
+                <strong>PRE +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Luta">
+                <span>Luta</span>
+                <strong>FOR +5</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Magia">
+                <span>Magia</span>
+                <strong>INT +32</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Medicina">
+                <span>Medicina</span>
+                <strong>INT +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Percepção">
+                <span>Percepção</span>
+                <strong>PRE +10</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Profissão">
+                <span>Profissão</span>
+                <strong>INT +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Pilotagem">
+                <span>Pilotagem</span>
+                <strong>AGI +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Pontaria">
+                <span>Pontaria</span>
+                <strong>AGI +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Reflexos">
+                <span>Reflexos</span>
+                <strong>AGI +19</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Religião">
+                <span>Religião</span>
+                <strong>PRE +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Sobrevivência">
+                <span>Sobrevivência</span>
+                <strong>INT +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Tática">
+                <span>Tática</span>
+                <strong>INT +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Tecnologia">
+                <span>Tecnologia</span>
+                <strong>INT +0</strong>
+            </button>
+
+            <button class="pericia" data-pericia="Vontade">
+                <span>Vontade</span>
+                <strong>PRE +5</strong>
+            </button>
+
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="secao-titulo">
+            <span>COMBATE</span>
+            <h2>PODERES</h2>
+        </div>
+
+        <div class="lista-poderes" id="lista-poderes">
+
+            <article class="poder-card">
+                <div class="poder-topo">
+                    <div>
+                        <span>MANIPULAÇÃO DO ESPAÇO</span>
+                        <h3>Técnica Azul</h3>
+                    </div>
+                    <strong>50 PM</strong>
+                </div>
+
+                <p>Concentra e manipula o espaço para criar uma força de atração devastadora.</p>
+
+                <div class="poder-info">
+                    <span>DANO</span>
+                    <strong>10d12</strong>
+                </div>
+
+                <button class="botao-rolar-poder" data-poder="azul">
+                    ATAQUE + DANO
+                </button>
+            </article>
+
+            <article class="poder-card">
+                <div class="poder-topo">
+                    <div>
+                        <span>MANIPULAÇÃO DO ESPAÇO</span>
+                        <h3>Técnica Vermelha</h3>
+                    </div>
+                    <strong>50 PM</strong>
+                </div>
+
+                <p>Libera uma poderosa força de repulsão através da manipulação espacial.</p>
+
+                <div class="poder-info">
+                    <span>DANO</span>
+                    <strong>10d12</strong>
+                </div>
+
+                <button class="botao-rolar-poder" data-poder="vermelha">
+                    ATAQUE + DANO
+                </button>
+            </article>
+
+            <article class="poder-card">
+                <div class="poder-topo">
+                    <div>
+                        <span>MANIPULAÇÃO DO ESPAÇO</span>
+                        <h3>Técnica Púrpura</h3>
+                    </div>
+                    <strong>500 PM</strong>
+                </div>
+
+                <p>Combina as técnicas Azul e Vermelha para produzir uma força destrutiva absurda.</p>
+
+                <div class="poder-info">
+                    <span>DANO</span>
+                    <strong>25d50</strong>
+                </div>
+
+                <button class="botao-rolar-poder" data-poder="purpura">
+                    ATAQUE + DANO
+                </button>
+            </article>
+
+            <article class="poder-card">
+                <div class="poder-topo">
+                    <div>
+                        <span>CHAMAS NEGRAS</span>
+                        <h3>Amaterasu</h3>
+                    </div>
+                </div>
+
+                <p>Invoca chamas negras que queimam o alvo com uma intensidade sobrenatural.</p>
+
+                <div class="poder-info">
+                    <span>DANO</span>
+                    <strong>20d12</strong>
+                </div>
+
+                <div class="poder-info">
+                    <span>CRÍTICO</span>
+                    <strong>20 / +5 DADOS</strong>
+                </div>
+
+                <button class="botao-rolar-poder" data-poder="amaterasu">
+                    ATAQUE + DANO
+                </button>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="secao-titulo">
+            <span>PASSIVAS</span>
+            <h2>HABILIDADES</h2>
+        </div>
+
+        <div class="lista-habilidades" id="lista-habilidades"></div>
+    </section>
+
+    <section class="secao">
+        <div class="secao-titulo">
+            <span>REGISTRO</span>
+            <h2>ADICIONAR PODER / HABILIDADE</h2>
+        </div>
+
+        <div class="criador-container">
+
+            <div class="campo">
+                <label>TIPO</label>
+
+                <select id="novo-tipo">
+                    <option value="poder">PODER</option>
+                    <option value="habilidade">HABILIDADE</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>NOME</label>
+                <input type="text" id="novo-nome" placeholder="Nome">
+            </div>
+
+            <div class="campo campo-grande">
+                <label>DESCRIÇÃO</label>
+                <textarea id="novo-descricao" placeholder="Descrição"></textarea>
+            </div>
+
+            <div class="campo">
+                <label>DANO</label>
+                <input type="text" id="novo-dano" placeholder="Ex: 10d12">
+            </div>
+
+            <div class="campo">
+                <label>BUFFS</label>
+                <input type="text" id="novo-buffs" placeholder="Ex: +5 Magia">
+            </div>
+
+            <button class="botao-adicionar" id="btn-adicionar">
+                ADICIONAR
+            </button>
+
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="secao-titulo">
+            <span>EQUIPAMENTO</span>
+            <h2>ARMAS</h2>
+        </div>
+
+        <div class="armas">
+
+            <article class="arma-card">
+                <div class="arma-topo">
+                    <div>
+                        <span>ARMA PRINCIPAL</span>
+                        <h3>Baixo Elétrico Muito Aura</h3>
+                    </div>
+                    <strong>19</strong>
+                </div>
+
+                <p>Baixo elétrico usado como arma de combate.</p>
+
+                <div class="arma-info">
+                    <div>
+                        <span>ATAQUE</span>
+                        <strong>LUTA</strong>
+                    </div>
+
+                    <div>
+                        <span>DANO</span>
+                        <strong>6d12 + 3d8</strong>
+                    </div>
+
+                    <div>
+                        <span>CRÍTICO</span>
+                        <strong>19 / +4 DADOS</strong>
+                    </div>
+                </div>
+
+                <button class="botao-rolar-arma" data-arma="baixo">
+                    ATAQUE + DANO
+                </button>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="secao-titulo">
+            <span>ESTADO</span>
+            <h2>BUFFS MANUAIS</h2>
+        </div>
+
+        <div class="buffs">
+
+            <label class="buff">
+                <input type="checkbox" id="buff-concentracao">
+                <span>
+                    <strong>CONCENTRAÇÃO</strong>
+                    <small>+20 nos testes e +20 dano</small>
+                </span>
+            </label>
+
+            <label class="buff">
+                <input type="checkbox" id="buff-raca">
+                <span>
+                    <strong>RAÇA SUPERIOR</strong>
+                    <small>+10 nos testes</small>
+                </span>
+            </label>
+
+        </div>
+    </section>
+
+    <section class="utilidades">
+
+        <div class="utilidade">
+            <div class="secao-titulo">
+                <span>DANO</span>
+                <h2>DANO RECEBIDO</h2>
+            </div>
+
+            <div class="dano-box">
+                <input type="number" id="dano-recebido" placeholder="Dano recebido">
+                <button id="btn-dano">CALCULAR</button>
+            </div>
+
+            <div class="resultado-dano" id="resultado-dano">
+                <span>DANO APÓS DEFESA</span>
+                <strong>0</strong>
+            </div>
+        </div>
+
+        <div class="utilidade">
+            <div class="secao-titulo">
+                <span>ROLAGEM</span>
+                <h2>DADO PERSONALIZADO</h2>
+            </div>
+
+            <div class="dado-box">
+                <input type="text" id="dado-personalizado" placeholder="Ex: 1d20">
+                <button id="btn-dado">ROLAR</button>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<div class="resultado-overlay" id="resultado-overlay">
+    <div class="resultado-modal">
+
+        <button class="fechar-resultado" id="fechar-resultado">×</button>
+
+        <span>RESULTADO</span>
+        <h2 id="resultado-titulo">ROLAGEM</h2>
+
+        <div id="resultado-conteudo"></div>
+
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
