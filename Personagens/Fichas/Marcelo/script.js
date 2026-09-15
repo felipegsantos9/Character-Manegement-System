@@ -1,3 +1,5 @@
+const STORAGE = "personagem_marcelo";
+
 const xpPorNivel = {
     2: 230,
     3: 450,
@@ -20,413 +22,157 @@ const xpPorNivel = {
     20: 30000
 };
 
-const estadoPadrao = {
-    nivel: 7,
-    pvAtual: 200,
-    peAtual: 120,
-    sanAtual: 280,
-    pmAtual: 260,
-    xpAtual: 0,
-    equalizeAcumulado: 0,
-    buffs: {
-        concentracao: false,
-        racaSuperior: false
-    },
-    poderesPersonalizados: [],
-    habilidadesPersonalizadas: []
+const maximos = {
+    pv: 200,
+    pe: 120,
+    san: 280,
+    pm: 260
 };
 
-const atributosBase = {
-    FOR: {
-        nome: "FORÇA",
-        valor: 3
-    },
-    AGI: {
-        nome: "AGILIDADE",
-        valor: 3
-    },
-    VIG: {
-        nome: "VIGOR",
-        valor: 2
-    },
-    PRE: {
-        nome: "PRESENÇA",
-        valor: 2
-    },
-    INT: {
-        nome: "INTELECTO",
-        valor: 3
-    }
+const atributos = {
+    FOR: 3,
+    AGI: 3,
+    VIG: 2,
+    PRE: 2,
+    INT: 3
 };
 
 const pericias = {
-    Acrobacia: {
-        atributo: "AGI",
-        bonus: 5
+    Acrobacia: { atributo: "AGI", bonus: 5 },
+    Alquimia: { atributo: "INT", bonus: 0 },
+    Atletismo: { atributo: "FOR", bonus: 5 },
+    Atualidades: { atributo: "INT", bonus: 0 },
+    Adestramento: { atributo: "PRE", bonus: 0 },
+    Artes: { atributo: "PRE", bonus: 0 },
+    Crime: { atributo: "AGI", bonus: 0 },
+    Ciências: { atributo: "INT", bonus: 0 },
+    Carisma: { atributo: "PRE", bonus: 5 },
+    Diplomacia: { atributo: "PRE", bonus: 5 },
+    Enganação: { atributo: "PRE", bonus: 5 },
+    Engenharia: { atributo: "INT", bonus: 0 },
+    Furtividade: { atributo: "AGI", bonus: 0 },
+    Fortitude: { atributo: "VIG", bonus: 32 },
+    Iniciativa: { atributo: "AGI", bonus: 3 },
+    Investigação: { atributo: "INT", bonus: 10 },
+    Intimidação: { atributo: "PRE", bonus: 0 },
+    Intuição: { atributo: "PRE", bonus: 0 },
+    Luta: { atributo: "FOR", bonus: 5 },
+    Magia: { atributo: "INT", bonus: 32 },
+    Medicina: { atributo: "INT", bonus: 0 },
+    Percepção: { atributo: "PRE", bonus: 10 },
+    Profissão: { atributo: "INT", bonus: 0 },
+    Pilotagem: { atributo: "AGI", bonus: 0 },
+    Pontaria: { atributo: "AGI", bonus: 0 },
+    Reflexos: { atributo: "AGI", bonus: 19 },
+    Religião: { atributo: "PRE", bonus: 0 },
+    Sobrevivência: { atributo: "INT", bonus: 0 },
+    Tática: { atributo: "INT", bonus: 0 },
+    Tecnologia: { atributo: "INT", bonus: 0 },
+    Vontade: { atributo: "PRE", bonus: 5 }
+};
+
+const poderesFixos = {
+    "Técnica Azul": {
+        custo: 50,
+        dano: "10d12",
+        critico: 20
     },
 
-    Alquimia: {
-        atributo: "INT",
-        bonus: 0
+    "Técnica Vermelha": {
+        custo: 50,
+        dano: "10d12",
+        critico: 20
     },
 
-    Atletismo: {
-        atributo: "FOR",
-        bonus: 5
+    "Técnica Púrpura": {
+        custo: 500,
+        dano: "25d50",
+        critico: 20
     },
 
-    Atualidades: {
-        atributo: "INT",
-        bonus: 0
-    },
-
-    Adestramento: {
-        atributo: "PRE",
-        bonus: 0
-    },
-
-    Artes: {
-        atributo: "PRE",
-        bonus: 0
-    },
-
-    Crime: {
-        atributo: "AGI",
-        bonus: 0
-    },
-
-    Ciências: {
-        atributo: "INT",
-        bonus: 0
-    },
-
-    Carisma: {
-        atributo: "PRE",
-        bonus: 5
-    },
-
-    Diplomacia: {
-        atributo: "PRE",
-        bonus: 5
-    },
-
-    Enganação: {
-        atributo: "PRE",
-        bonus: 5
-    },
-
-    Engenharia: {
-        atributo: "INT",
-        bonus: 0
-    },
-
-    Furtividade: {
-        atributo: "AGI",
-        bonus: 0
-    },
-
-    Fortitude: {
-        atributo: "VIG",
-        bonus: 32
-    },
-
-    Iniciativa: {
-        atributo: "AGI",
-        bonus: 3
-    },
-
-    Investigação: {
-        atributo: "INT",
-        bonus: 10
-    },
-
-    Intimidação: {
-        atributo: "PRE",
-        bonus: 0
-    },
-
-    Intuição: {
-        atributo: "PRE",
-        bonus: 0
-    },
-
-    Luta: {
-        atributo: "FOR",
-        bonus: 5
-    },
-
-    Magia: {
-        atributo: "INT",
-        bonus: 32
-    },
-
-    Medicina: {
-        atributo: "INT",
-        bonus: 0
-    },
-
-    Percepção: {
-        atributo: "PRE",
-        bonus: 10
-    },
-
-    Profissão: {
-        atributo: "INT",
-        bonus: 0
-    },
-
-    Pilotagem: {
-        atributo: "AGI",
-        bonus: 0
-    },
-
-    Pontaria: {
-        atributo: "AGI",
-        bonus: 0
-    },
-
-    Reflexos: {
-        atributo: "AGI",
-        bonus: 19
-    },
-
-    Religião: {
-        atributo: "PRE",
-        bonus: 0
-    },
-
-    Sobrevivência: {
-        atributo: "INT",
-        bonus: 0
-    },
-
-    Tática: {
-        atributo: "INT",
-        bonus: 0
-    },
-
-    Tecnologia: {
-        atributo: "INT",
-        bonus: 0
-    },
-
-    Vontade: {
-        atributo: "PRE",
-        bonus: 5
+    "Amaterasu": {
+        custo: 0,
+        dano: "20d12",
+        danoCritico: "25d12",
+        critico: 20
     }
 };
 
-const poderes = [
-    {
-        id: "azul",
-        nome: "Técnica Azul",
-        texto: "Concentra e manipula o espaço para criar uma força de atração devastadora.",
-        custo: 50,
-        critico: 20,
-        dano: "10d12",
-        extra: 0
-    },
-
-    {
-        id: "vermelha",
-        nome: "Técnica Vermelha",
-        texto: "Libera uma poderosa força de repulsão através da manipulação espacial.",
-        custo: 50,
-        critico: 20,
-        dano: "10d12",
-        extra: 0
-    },
-
-    {
-        id: "purpura",
-        nome: "Técnica Púrpura",
-        texto: "Combina as técnicas Azul e Vermelha para produzir uma força destrutiva absurda.",
-        custo: 500,
-        critico: 20,
-        dano: "25d50",
-        extra: 0
-    },
-
-    {
-        id: "amaterasu",
-        nome: "Amaterasu",
-        texto: "Invoca chamas negras que queimam o alvo com uma intensidade sobrenatural.",
-        custo: 0,
-        critico: 20,
-        dano: "20d12",
-        extra: 5
-    }
-];
-
-const armas = [
-    {
-        id: "baixo",
-        nome: "Baixo Elétrico Muito Aura",
-        ataque: "Luta",
-        dano: "6d12+3d8",
-        critico: 19,
-        extra: 4
-    }
-];
-
+localStorage.removeItem("personagem_marcelo");
 let estado = carregarEstado();
 
-function carregarEstado() {
-    const salvo = localStorage.getItem(
-        "personagem_marcelo"
-    );
-
-    if (!salvo) {
-        return JSON.parse(
-            JSON.stringify(estadoPadrao)
-        );
-    }
-
-    const dados = JSON.parse(salvo);
-
+function estadoInicial() {
     return {
-        ...estadoPadrao,
-        ...dados,
+        pv: 200,
+        pe: 120,
+        san: 280,
+        pm: 260,
+
+        xp: 0,
+        nivel: 7,
+
+        equalizeAcumulado: 0,
 
         buffs: {
-            ...estadoPadrao.buffs,
-            ...(dados.buffs || {})
+            concentracao: false,
+            racaSuperior: false
         },
 
-        poderesPersonalizados:
-            dados.poderesPersonalizados || [],
-
-        habilidadesPersonalizadas:
-            dados.habilidadesPersonalizadas || []
+        habilidades: [],
+        poderesCustom: []
     };
 }
 
-function salvarEstado() {
-    const existente = JSON.parse(
-        localStorage.getItem(
-            "personagem_marcelo"
-        ) || "{}"
-    );
+function carregarEstado() {
+    const salvo = localStorage.getItem(STORAGE);
+
+    if (!salvo) {
+        return estadoInicial();
+    }
+
+    try {
+        const dados = JSON.parse(salvo);
+        const base = estadoInicial();
+
+        return {
+            ...base,
+            ...dados,
+            buffs: {
+                ...base.buffs,
+                ...(dados.buffs || {})
+            },
+            habilidades: dados.habilidades || [],
+            poderesCustom: dados.poderesCustom || []
+        };
+    } catch {
+        return estadoInicial();
+    }
+}
+
+function salvar() {
+    localStorage.setItem(STORAGE, JSON.stringify(estado));
+
+    const arquivo = JSON.parse(localStorage.getItem("personagem_marcelo") || "{}");
 
     localStorage.setItem(
         "personagem_marcelo",
         JSON.stringify({
-            ...existente,
-            ...estado,
-            nivel: estado.nivel
+            ...arquivo,
+            nivel: estado.nivel,
+            xp: estado.xp,
+            ultimoAcesso: new Date().toLocaleString("pt-BR")
         })
     );
 }
 
-function rolarDado(lados) {
-    return Math.floor(
-        Math.random() * lados
-    ) + 1;
+function clamp(valor, minimo, maximo) {
+    return Math.min(Math.max(valor, minimo), maximo);
 }
 
-function rolarGrupo(
-    quantidade,
-    lados
-) {
-    const resultados = [];
+function atributoEfetivo(nome) {
+    let valor = atributos[nome];
 
-    for (
-        let i = 0;
-        i < quantidade;
-        i++
-    ) {
-        resultados.push(
-            rolarDado(lados)
-        );
-    }
-
-    return resultados;
-}
-
-function parseDice(expressao) {
-    const grupos = expressao
-        .toLowerCase()
-        .replace(/\s/g, "")
-        .split("+");
-
-    return grupos.map(grupo => {
-        const partes =
-            grupo.split("d");
-
-        return {
-            quantidade:
-                Number(partes[0]) || 1,
-
-            lados:
-                Number(partes[1])
-        };
-    });
-}
-
-function rolarDano(expressao) {
-    const grupos =
-        parseDice(expressao);
-
-    let total = 0;
-
-    grupos.forEach(grupo => {
-        const resultados =
-            rolarGrupo(
-                grupo.quantidade,
-                grupo.lados
-            );
-
-        total += resultados.reduce(
-            (soma, valor) =>
-                soma + valor,
-            0
-        );
-    });
-
-    return total;
-}
-
-function adicionarDados(
-    expressao,
-    quantidadeExtra
-) {
-    if (!quantidadeExtra) {
-        return expressao;
-    }
-
-    const grupos =
-        parseDice(expressao);
-
-    if (!grupos.length) {
-        return expressao;
-    }
-
-    const principal =
-        grupos[0];
-
-    principal.quantidade +=
-        quantidadeExtra;
-
-    return grupos
-        .map(
-            grupo =>
-                `${grupo.quantidade}d${grupo.lados}`
-        )
-        .join("+");
-}
-
-function atributoEfetivo(id) {
-    const atributo =
-        atributosBase[id];
-
-    if (!atributo) {
-        return 0;
-    }
-
-    let valor =
-        atributo.valor;
-
-    if (estado.pvAtual < 60) {
+    if (estado.pv < 60) {
         valor += 1;
     }
 
@@ -434,1345 +180,725 @@ function atributoEfetivo(id) {
 }
 
 function bonusPericia(nome) {
-    const pericia =
-        pericias[nome];
+    let bonus = pericias[nome]?.bonus || 0;
 
-    if (!pericia) {
-        return 0;
+    if (nome === "Magia") {
+        bonus += estado.equalizeAcumulado;
     }
 
-    let bonus =
-        pericia.bonus;
-
-    if (
-        nome === "Fortitude" ||
-        nome === "Magia"
-    ) {
-        bonus +=
-            estado.equalizeAcumulado;
-    }
-
-    if (
-        estado.buffs.concentracao
-    ) {
+    if (estado.buffs.concentracao) {
         bonus += 20;
     }
 
-    if (
-        estado.buffs.racaSuperior
-    ) {
+    if (estado.buffs.racaSuperior) {
         bonus += 10;
     }
+
+    estado.habilidades.forEach(habilidade => {
+        if (
+            habilidade.ativa &&
+            habilidade.pericia === nome
+        ) {
+            bonus += habilidade.bonus;
+        }
+    });
 
     return bonus;
 }
 
-function rolarAtributo(id) {
-    const quantidade =
-        atributoEfetivo(id);
-
-    const resultados =
-        rolarGrupo(
-            quantidade,
-            20
-        );
-
-    const maior =
-        Math.max(...resultados);
-
-    mostrarResultado(
-        atributosBase[id].nome,
-        [
-            ["RESULTADO", maior]
-        ],
-        resultados.includes(20)
-            ? "CRÍTICO"
-            : ""
-    );
-}
-
-function rolarPericia(nome) {
-    const pericia =
-        pericias[nome];
-
-    if (!pericia) {
-        return;
-    }
-
-    const quantidade =
-        atributoEfetivo(
-            pericia.atributo
-        );
-
-    const resultados =
-        rolarGrupo(
-            quantidade,
-            20
-        );
-
-    const maior =
-        Math.max(...resultados);
-
-    const bonus =
-        bonusPericia(nome);
-
-    const total =
-        maior + bonus;
-
-    mostrarResultado(
-        nome,
-        [
-            ["RESULTADO", total]
-        ],
-        resultados.includes(20)
-            ? "CRÍTICO"
-            : ""
-    );
-}
-
-function gastarPM(custo) {
-    if (custo <= 0) {
-        return true;
-    }
-
-    if (
-        estado.pmAtual >= custo
-    ) {
-        estado.pmAtual -=
-            custo;
-
-        salvarEstado();
-        atualizarInterface();
-
-        return true;
-    }
-
-    const pmDisponivel =
-        estado.pmAtual;
-
-    estado.pmAtual = 0;
-    estado.pvAtual = 0;
-
-    estado.equalizeAcumulado = 0;
-
-    salvarEstado();
-    atualizarInterface();
-
-    mostrarResultado(
-        "SOBRECARGA",
-        [
-            [
-                "PM NECESSÁRIO",
-                `${custo} PM`
-            ],
-
-            [
-                "PM DISPONÍVEL",
-                `${pmDisponivel} PM`
-            ],
-
-            [
-                "PM RESTANTE",
-                "0 PM"
-            ],
-
-            [
-                "PV",
-                "0"
-            ],
-
-            [
-                "CONSEQUÊNCIA",
-                "CORPO LEVADO AO LIMITE"
-            ]
-        ],
-        "PV ZERADO"
-    );
-
-    return true;
-}
-
-function rolarPoder(id) {
-    const poder =
-        poderes.find(
-            item => item.id === id
-        );
-
-    if (!poder) {
-        return;
-    }
-
-    if (
-        !gastarPM(
-            poder.custo
-        )
-    ) {
-        return;
-    }
-
-    const quantidade =
-        atributoEfetivo("INT");
-
-    const resultados =
-        rolarGrupo(
-            quantidade,
-            20
-        );
-
-    const maior =
-        Math.max(...resultados);
-
-    const bonus =
-        bonusPericia("Magia");
-
-    const ataque =
-        maior + bonus;
-
-    const critico =
-        resultados.includes(20);
-
-    let danoExpressao =
-        poder.dano;
-
-    if (
-        critico &&
-        poder.extra > 0
-    ) {
-        danoExpressao =
-            adicionarDados(
-                danoExpressao,
-                poder.extra
-            );
-    }
-
-    let dano =
-        rolarDano(
-            danoExpressao
-        );
-
-    if (
-        estado.buffs.concentracao
-    ) {
-        dano += 20;
-    }
-
-    const linhas = [
-        [
-            "ATAQUE",
-            ataque
-        ],
-
-        [
-            "DANO",
-            dano
-        ],
-
-        [
-            "PM GASTO",
-            poder.custo
-        ],
-
-        [
-            "PM RESTANTE",
-            estado.pmAtual
-        ]
-    ];
-
-    if (critico) {
-        linhas.push([
-            "CRÍTICO",
-            `SIM • ${danoExpressao}`
-        ]);
-    }
-
-    mostrarResultado(
-        poder.nome,
-        linhas,
-        critico
-            ? "CRÍTICO"
-            : ""
-    );
-}
-
-function rolarAtaque(
-    armaId
-) {
-    const arma =
-        armas.find(
-            item => item.id === armaId
-        );
-
-    if (!arma) {
-        return;
-    }
-
-    const pericia =
-        pericias[arma.ataque];
-
-    const quantidade =
-        atributoEfetivo(
-            pericia.atributo
-        );
-
-    const resultados =
-        rolarGrupo(
-            quantidade,
-            20
-        );
-
-    const maior =
-        Math.max(...resultados);
-
-    const bonus =
-        bonusPericia(
-            arma.ataque
-        );
-
-    const ataque =
-        maior + bonus;
-
-    const criticoAtaque =
-        resultados.includes(20);
-
-    const criticoArma =
-        !criticoAtaque &&
-        maior >= arma.critico;
-
-    const critico =
-        criticoAtaque ||
-        criticoArma;
-
-    let danoExpressao =
-        arma.dano;
-
-    if (critico) {
-        danoExpressao =
-            adicionarDados(
-                danoExpressao,
-                arma.extra
-            );
-    }
-
-    let dano =
-        rolarDano(
-            danoExpressao
-        );
-
-    if (
-        estado.buffs.concentracao
-    ) {
-        dano += 20;
-    }
-
-    const linhas = [
-        [
-            "ATAQUE",
-            ataque
-        ],
-
-        [
-            "DANO",
-            dano
-        ]
-    ];
-
-    if (criticoAtaque) {
-        linhas.push([
-            "CRÍTICO",
-            "ATAQUE NATURAL 20"
-        ]);
-    } else if (criticoArma) {
-        linhas.push([
-            "CRÍTICO",
-            `ARMA • ${arma.critico}`
-        ]);
-    }
-
-    if (critico) {
-        linhas.push([
-            "ROLAGEM",
-            danoExpressao
-        ]);
-    }
-
-    mostrarResultado(
-        arma.nome,
-        linhas,
-        critico
-            ? "CRÍTICO"
-            : ""
-    );
-}
-
-function adicionarXP(valor) {
-    valor = Number(valor);
-
-    if (
-        !valor ||
-        valor <= 0
-    ) {
-        return;
-    }
-
-    estado.xpAtual += valor;
-
-    while (
-        estado.nivel < 20 &&
-        estado.xpAtual >=
-            xpPorNivel[
-                estado.nivel + 1
-            ]
-    ) {
-        estado.xpAtual -=
-            xpPorNivel[
-                estado.nivel + 1
-            ];
-
-        estado.nivel++;
-    }
-
-    salvarEstado();
-    atualizarInterface();
-
-    document.getElementById(
-        "xp-adicionar"
-    ).value = "";
-}
-
-function atualizarXP() {
-    const xpAtual =
-        document.getElementById(
-            "xp-atual"
-        );
-
-    const xpNecessario =
-        document.getElementById(
-            "xp-necessario"
-        );
-
-    const nivel =
-        document.getElementById(
-            "nivel"
-        );
-
-    if (xpAtual) {
-        xpAtual.textContent =
-            estado.xpAtual;
-    }
-
-    if (nivel) {
-        nivel.textContent =
-            String(
-                estado.nivel
-            ).padStart(2, "0");
-    }
-
-    if (xpNecessario) {
-        if (
-            estado.nivel >= 20
-        ) {
-            xpNecessario.textContent =
-                "/ MÁXIMO";
-        } else {
-            xpNecessario.textContent =
-                `/ ${
-                    xpPorNivel[
-                        estado.nivel + 1
-                    ]
-                }`;
-        }
-    }
+function defesaAtual() {
+    return 65 + estado.equalizeAcumulado;
 }
 
 function atualizarRecursos() {
-    document.getElementById(
-        "pv-atual"
-    ).value =
-        estado.pvAtual;
+    atualizarRecursoVisual("pv");
+    atualizarRecursoVisual("pe");
+    atualizarRecursoVisual("san");
+    atualizarRecursoVisual("pm");
 
-    document.getElementById(
-        "pe-atual"
-    ).value =
-        estado.peAtual;
-
-    document.getElementById(
-        "san-atual"
-    ).value =
-        estado.sanAtual;
-
-    document.getElementById(
-        "pm-atual"
-    ).value =
-        estado.pmAtual;
+    document.getElementById("status-pv").textContent = estado.pv;
 }
 
-function atualizarAtributos() {
-    Object.keys(
-        atributosBase
-    ).forEach(id => {
-        const elemento =
-            document.getElementById(
-                `attr-${id}`
-            );
+function atualizarRecursoVisual(recurso) {
+    const atual = estado[recurso];
+    const maximo = maximos[recurso];
 
-        if (elemento) {
-            elemento.textContent =
-                atributoEfetivo(id);
+    document.getElementById(`${recurso}-atual`).textContent = atual;
+
+    const barra = document.getElementById(`${recurso}-barra`);
+
+    if (barra) {
+        barra.style.width = `${(atual / maximo) * 100}%`;
+    }
+}
+
+function atualizarDefesa() {
+    document.getElementById("defesa-valor").textContent = defesaAtual();
+    document.getElementById("equalize-valor").textContent =
+        `+${estado.equalizeAcumulado}`;
+}
+
+function atualizarPericias() {
+    Object.keys(pericias).forEach(nome => {
+        const id = "pericia-" + normalizar(nome);
+        const elemento = document.getElementById(id);
+
+        if (!elemento) return;
+
+        const bonus = bonusPericia(nome);
+
+        elemento.textContent = `${bonus >= 0 ? "+" : ""}${bonus}`;
+
+        const pai = elemento.closest(".pericia");
+
+        if (!pai) return;
+
+        pai.classList.remove("amarelo", "roxo", "vermelho");
+
+        if (bonus >= 15) {
+            pai.classList.add("vermelho");
+        } else if (bonus >= 10) {
+            pai.classList.add("roxo");
+        } else if (bonus >= 5) {
+            pai.classList.add("amarelo");
         }
     });
 }
 
-function atualizarPericias() {
-    const fortitude =
-        document.getElementById(
-            "fortitude-valor"
-        );
+function atualizarAtributos() {
+    Object.keys(atributos).forEach(nome => {
+        const elemento = document.getElementById(`atributo-${nome}`);
 
-    const magia =
-        document.getElementById(
-            "magia-valor"
-        );
+        if (elemento) {
+            elemento.textContent = atributoEfetivo(nome);
+        }
+    });
+}
 
-    if (fortitude) {
-        fortitude.textContent =
-            bonusPericia(
-                "Fortitude"
-            );
+function atualizarXP() {
+    document.getElementById("nivel").textContent = estado.nivel;
+    document.getElementById("nivel-topo").textContent = estado.nivel;
+    document.getElementById("xp-nivel").textContent = estado.nivel;
+    document.getElementById("xp-atual").textContent = estado.xp;
+
+    if (estado.nivel >= 20) {
+        document.getElementById("xp-proximo").textContent = "NÍVEL MÁXIMO";
+        document.getElementById("xp-progresso").style.width = "100%";
+        return;
     }
 
-    if (magia) {
-        magia.textContent =
-            bonusPericia(
-                "Magia"
-            );
-    }
+    const necessario = xpPorNivel[estado.nivel + 1] || 30000;
+
+    document.getElementById("xp-proximo").textContent =
+        `/ ${necessario} XP`;
+
+    const porcentagem =
+        Math.min((estado.xp / necessario) * 100, 100);
+
+    document.getElementById("xp-progresso").style.width =
+        `${porcentagem}%`;
 }
 
 function atualizarBuffs() {
-    document.getElementById(
-        "buff-concentracao"
-    ).checked =
-        estado.buffs.concentracao;
+    atualizarBuffVisual("concentracao");
+    atualizarBuffVisual("racaSuperior");
+}
 
-    document.getElementById(
-        "buff-raca"
-    ).checked =
-        estado.buffs.racaSuperior;
+function atualizarBuffVisual(nome) {
+    const id =
+        nome === "concentracao"
+            ? "buff-concentracao"
+            : "buff-raca";
+
+    const elemento = document.getElementById(id);
+
+    if (!elemento) return;
+
+    const botao = elemento.querySelector("button");
+
+    elemento.classList.toggle("ativo", estado.buffs[nome]);
+
+    botao.textContent =
+        estado.buffs[nome]
+            ? "ATIVO"
+            : "ATIVAR";
 }
 
 function atualizarInterface() {
-    atualizarXP();
     atualizarRecursos();
-    atualizarAtributos();
+    atualizarDefesa();
     atualizarPericias();
+    atualizarAtributos();
+    atualizarXP();
     atualizarBuffs();
+    renderizarHabilidades();
+    renderizarPoderesCustom();
 }
 
-function mostrarResultado(
-    titulo,
-    linhas,
-    destaque = ""
-) {
-    const overlay =
-        document.getElementById(
-            "resultado-overlay"
-        );
+function alterarRecurso(recurso, quantidade) {
+    const anterior = estado[recurso];
 
-    const tituloElemento =
-        document.getElementById(
-            "resultado-titulo"
-        );
-
-    const conteudo =
-        document.getElementById(
-            "resultado-conteudo"
-        );
-
-    tituloElemento.textContent =
-        titulo;
-
-    conteudo.innerHTML =
-        linhas
-            .map(
-                linha => `
-                    <div class="resultado-linha">
-                        <span>
-                            ${linha[0]}
-                        </span>
-
-                        <strong>
-                            ${linha[1]}
-                        </strong>
-                    </div>
-                `
-            )
-            .join("");
-
-    if (destaque) {
-        conteudo.innerHTML += `
-            <div class="resultado-linha">
-                <span>STATUS</span>
-
-                <strong class="critico">
-                    ${destaque}
-                </strong>
-            </div>
-        `;
-    }
-
-    overlay.classList.add(
-        "ativo"
+    estado[recurso] = clamp(
+        estado[recurso] + quantidade,
+        0,
+        maximos[recurso]
     );
-}
-
-function adicionarPersonalizado() {
-    const tipo =
-        document.getElementById(
-            "novo-tipo"
-        ).value;
-
-    const nome =
-        document.getElementById(
-            "novo-nome"
-        ).value.trim();
-
-    const descricao =
-        document.getElementById(
-            "novo-descricao"
-        ).value.trim();
-
-    const dano =
-        document.getElementById(
-            "novo-dano"
-        ).value.trim();
-
-    const buffs =
-        document.getElementById(
-            "novo-buffs"
-        ).value.trim();
-
-    const novo = {
-        id: Date.now(),
-        nome,
-        descricao,
-        dano,
-        buffs
-    };
 
     if (
-        tipo === "poder"
+        recurso === "pv" &&
+        estado[recurso] < anterior
     ) {
-        estado.poderesPersonalizados.push(
-            novo
-        );
-    } else {
-        estado.habilidadesPersonalizadas.push(
-            novo
-        );
-    }
-
-    salvarEstado();
-    renderizarPersonalizados();
-    limparFormulario();
-}
-
-function criarCardPersonalizado(
-    item,
-    tipo
-) {
-    const podeRolar =
-        tipo === "poder" &&
-        item.dano;
-
-    return `
-        <article class="poder-card personalizado">
-
-            <div class="poder-topo">
-
-                <div>
-
-                    <span>
-                        ${
-                            tipo === "poder"
-                                ? "PODER PERSONALIZADO"
-                                : "HABILIDADE PERSONALIZADA"
-                        }
-                    </span>
-
-                    <h3>
-                        ${
-                            item.nome ||
-                            "SEM NOME"
-                        }
-                    </h3>
-
-                </div>
-
-                <button
-                    onclick="
-                        removerPersonalizado(
-                            ${item.id},
-                            '${tipo}'
-                        )
-                    "
-                >
-                    ×
-                </button>
-
-            </div>
-
-            ${
-                item.descricao
-                    ? `
-                        <p>
-                            ${item.descricao}
-                        </p>
-                    `
-                    : ""
-            }
-
-            ${
-                item.dano
-                    ? `
-                        <div class="info-personalizado">
-
-                            <span>
-                                DANO
-                            </span>
-
-                            <strong>
-                                ${item.dano}
-                            </strong>
-
-                        </div>
-                    `
-                    : ""
-            }
-
-            ${
-                item.buffs
-                    ? `
-                        <div class="info-personalizado">
-
-                            <span>
-                                BUFFS
-                            </span>
-
-                            <strong>
-                                ${item.buffs}
-                            </strong>
-
-                        </div>
-                    `
-                    : ""
-            }
-
-            ${
-                podeRolar
-                    ? `
-                        <button
-                            class="botao-rolar-poder"
-                            onclick="
-                                rolarPoderPersonalizado(
-                                    ${item.id}
-                                )
-                            "
-                        >
-                            ROLAR DANO
-                        </button>
-                    `
-                    : ""
-            }
-
-        </article>
-    `;
-}
-
-function renderizarPersonalizados() {
-    const listaPoderes =
-        document.getElementById(
-            "lista-poderes"
-        );
-
-    const listaHabilidades =
-        document.getElementById(
-            "lista-habilidades"
-        );
-
-    if (listaPoderes) {
-        listaPoderes
-            .querySelectorAll(
-                ".personalizado"
-            )
-            .forEach(
-                item =>
-                    item.remove()
-            );
-
-        estado.poderesPersonalizados
-            .forEach(item => {
-                listaPoderes.insertAdjacentHTML(
-                    "beforeend",
-                    criarCardPersonalizado(
-                        item,
-                        "poder"
-                    )
-                );
-            });
-    }
-
-    if (listaHabilidades) {
-        listaHabilidades.innerHTML =
-            "";
-
-        estado.habilidadesPersonalizadas
-            .forEach(item => {
-                listaHabilidades.insertAdjacentHTML(
-                    "beforeend",
-                    criarCardPersonalizado(
-                        item,
-                        "habilidade"
-                    )
-                );
-            });
-    }
-}
-
-function removerPersonalizado(
-    id,
-    tipo
-) {
-    if (
-        tipo === "poder"
-    ) {
-        estado.poderesPersonalizados =
-            estado.poderesPersonalizados.filter(
-                item =>
-                    item.id !== id
-            );
-    } else {
-        estado.habilidadesPersonalizadas =
-            estado.habilidadesPersonalizadas.filter(
-                item =>
-                    item.id !== id
-            );
-    }
-
-    salvarEstado();
-    renderizarPersonalizados();
-}
-
-function rolarPoderPersonalizado(
-    id
-) {
-    const poder =
-        estado.poderesPersonalizados.find(
-            item =>
-                item.id === id
-        );
-
-    if (
-        !poder ||
-        !poder.dano
-    ) {
-        return;
-    }
-
-    const dano =
-        rolarDano(
-            poder.dano
-        );
-
-    mostrarResultado(
-        poder.nome ||
-            "PODER",
-
-        [
-            [
-                "DANO",
-                dano
-            ]
-        ]
-    );
-}
-
-function limparFormulario() {
-    document.getElementById(
-        "novo-nome"
-    ).value = "";
-
-    document.getElementById(
-        "novo-descricao"
-    ).value = "";
-
-    document.getElementById(
-        "novo-dano"
-    ).value = "";
-
-    document.getElementById(
-        "novo-buffs"
-    ).value = "";
-}
-
-function calcularDanoRecebido() {
-    const entrada =
-        document.getElementById(
-            "dano-recebido"
-        );
-
-    const resultado =
-        document.getElementById(
-            "resultado-dano"
-        );
-
-    const dano =
-        Number(entrada.value);
-
-    if (
-        !dano ||
-        dano <= 0
-    ) {
-        resultado.querySelector(
-            "strong"
-        ).textContent = "0";
-
-        return;
-    }
-
-    const defesa = 65;
-
-    const danoFinal =
-        Math.max(
-            0,
-            dano - defesa
-        );
-
-    const pvAnterior =
-        estado.pvAtual;
-
-    estado.pvAtual =
-        Math.max(
-            0,
-            estado.pvAtual -
-                danoFinal
-        );
-
-    if (
-        estado.pvAtual <
-            pvAnterior &&
-        estado.pvAtual > 0
-    ) {
-        estado.equalizeAcumulado +=
-            5;
+        estado.equalizeAcumulado += 5;
     }
 
     if (
-        estado.pvAtual <= 0
+        recurso === "pv" &&
+        estado.pv <= 0
     ) {
-        estado.pvAtual = 0;
+        estado.pv = 0;
         estado.equalizeAcumulado = 0;
     }
 
-    salvarEstado();
+    salvar();
     atualizarInterface();
-
-    resultado.querySelector(
-        "strong"
-    ).textContent =
-        danoFinal;
-
-    mostrarResultado(
-        "DANO RECEBIDO",
-        [
-            [
-                "DANO ORIGINAL",
-                dano
-            ],
-
-            [
-                "DEFESA",
-                defesa
-            ],
-
-            [
-                "DANO SOFRIDO",
-                danoFinal
-            ],
-
-            [
-                "PV RESTANTE",
-                `${estado.pvAtual} / 200`
-            ]
-        ],
-        danoFinal > 0
-            ? "DANO APLICADO"
-            : "DANO NEGADO"
-    );
-
-    entrada.value = "";
 }
 
-function rolarDadoPersonalizado() {
-    const entrada =
-        document.getElementById(
-            "dado-personalizado"
+function receberDano() {
+    const campo = document.getElementById("dano-input");
+    const dano = Number(campo.value);
+
+    if (!dano || dano <= 0) {
+        mostrarResultado(
+            "DANO RECEBIDO",
+            "Digite uma quantidade de dano válida."
         );
-
-    const expressao =
-        entrada.value
-            .trim()
-            .toLowerCase();
-
-    if (!expressao) {
         return;
     }
 
-    try {
-        const resultado =
-            rolarDano(
-                expressao
-            );
+    const defesaAntes = defesaAtual();
+    const danoPV = Math.max(0, dano - defesaAntes);
 
-        mostrarResultado(
-            "DADO PERSONALIZADO",
-            [
-                [
-                    "ROLAGEM",
-                    expressao
-                ],
+    const pvAntes = estado.pv;
 
-                [
-                    "RESULTADO",
-                    resultado
-                ]
-            ]
-        );
-    } catch {
-        mostrarResultado(
-            "DADO PERSONALIZADO",
-            [
-                [
-                    "ERRO",
-                    "Expressão inválida"
-                ]
-            ]
-        );
+    estado.pv = clamp(
+        estado.pv - danoPV,
+        0,
+        maximos.pv
+    );
+
+    const perdeuPV = estado.pv < pvAntes;
+
+    if (perdeuPV) {
+        estado.equalizeAcumulado += 5;
     }
 
-    entrada.value = "";
-}
+    if (estado.pv <= 0) {
+        estado.pv = 0;
+        estado.equalizeAcumulado = 0;
+    }
 
-function configurarRecursos() {
-    const recursos = [
-        [
-            "pv-atual",
-            "pvAtual",
-            200
-        ],
+    salvar();
+    atualizarInterface();
 
-        [
-            "pe-atual",
-            "peAtual",
-            120
-        ],
+    document.getElementById("dano-resultado").textContent =
+        `${dano} de dano recebido • ${defesaAntes} absorvido pela Defesa • ${danoPV} de dano aplicado ao PV`;
 
-        [
-            "san-atual",
-            "sanAtual",
-            280
-        ],
+    campo.value = "";
 
-        [
-            "pm-atual",
-            "pmAtual",
-            260
-        ]
-    ];
-
-    recursos.forEach(
-        (
-            [
-                id,
-                propriedade,
-                maximo
-            ]
-        ) => {
-            const elemento =
-                document.getElementById(
-                    id
-                );
-
-            elemento.addEventListener(
-                "change",
-                () => {
-                    const anterior =
-                        estado[
-                            propriedade
-                        ];
-
-                    let novo =
-                        Number(
-                            elemento.value
-                        );
-
-                    if (
-                        Number.isNaN(
-                            novo
-                        )
-                    ) {
-                        novo =
-                            anterior;
-                    }
-
-                    novo =
-                        Math.max(
-                            0,
-                            Math.min(
-                                maximo,
-                                novo
-                            )
-                        );
-
-                    estado[
-                        propriedade
-                    ] = novo;
-
-                    if (
-                        propriedade ===
-                            "pvAtual" &&
-                        novo < anterior
-                    ) {
-                        estado.equalizeAcumulado +=
-                            5;
-                    }
-
-                    if (
-                        propriedade ===
-                            "pvAtual" &&
-                        novo <= 0
-                    ) {
-                        estado.equalizeAcumulado =
-                            0;
-                    }
-
-                    salvarEstado();
-                    atualizarInterface();
-                }
-            );
-        }
+    mostrarResultado(
+        "DANO RECEBIDO",
+        `Dano: ${dano}
+Defesa: ${defesaAntes}
+Dano aplicado: ${danoPV}
+PV restante: ${estado.pv}
+Equalize: +${estado.equalizeAcumulado} Defesa / Magia`
     );
 }
 
-function configurarEventos() {
-    document
-        .querySelectorAll(
-            ".atributo"
-        )
-        .forEach(botao => {
-            botao.addEventListener(
-                "click",
-                () => {
-                    rolarAtributo(
-                        botao.dataset
-                            .atributo
-                    );
-                }
-            );
-        });
+function rolarAtributo(nome) {
+    const quantidade = atributoEfetivo(nome);
+    const resultados = rolarMultiplosD20(quantidade);
+    const maior = Math.max(...resultados);
 
-    document
-        .querySelectorAll(
-            ".pericia"
-        )
-        .forEach(botao => {
-            botao.addEventListener(
-                "click",
-                () => {
-                    rolarPericia(
-                        botao.dataset
-                            .pericia
-                    );
-                }
-            );
-        });
-
-    document
-        .querySelectorAll(
-            ".botao-rolar-poder"
-        )
-        .forEach(botao => {
-            botao.addEventListener(
-                "click",
-                () => {
-                    rolarPoder(
-                        botao.dataset
-                            .poder
-                    );
-                }
-            );
-        });
-
-    document
-        .querySelectorAll(
-            ".botao-rolar-arma"
-        )
-        .forEach(botao => {
-            botao.addEventListener(
-                "click",
-                () => {
-                    rolarAtaque(
-                        botao.dataset
-                            .arma
-                    );
-                }
-            );
-        });
-
-    document
-        .getElementById(
-            "buff-concentracao"
-        )
-        .addEventListener(
-            "change",
-            evento => {
-                estado.buffs.concentracao =
-                    evento.target.checked;
-
-                salvarEstado();
-                atualizarInterface();
-            }
-        );
-
-    document
-        .getElementById(
-            "buff-raca"
-        )
-        .addEventListener(
-            "change",
-            evento => {
-                estado.buffs.racaSuperior =
-                    evento.target.checked;
-
-                salvarEstado();
-                atualizarInterface();
-            }
-        );
-
-    document
-        .getElementById(
-            "btn-xp"
-        )
-        .addEventListener(
-            "click",
-            () => {
-                adicionarXP(
-                    document.getElementById(
-                        "xp-adicionar"
-                    ).value
-                );
-            }
-        );
-
-    document
-        .getElementById(
-            "xp-adicionar"
-        )
-        .addEventListener(
-            "keydown",
-            evento => {
-                if (
-                    evento.key ===
-                    "Enter"
-                ) {
-                    adicionarXP(
-                        evento.target
-                            .value
-                    );
-                }
-            }
-        );
-
-    document
-        .getElementById(
-            "btn-dano"
-        )
-        .addEventListener(
-            "click",
-            calcularDanoRecebido
-        );
-
-    document
-        .getElementById(
-            "btn-dado"
-        )
-        .addEventListener(
-            "click",
-            rolarDadoPersonalizado
-        );
-
-    document
-        .getElementById(
-            "dado-personalizado"
-        )
-        .addEventListener(
-            "keydown",
-            evento => {
-                if (
-                    evento.key ===
-                    "Enter"
-                ) {
-                    rolarDadoPersonalizado();
-                }
-            }
-        );
-
-    document
-        .getElementById(
-            "btn-adicionar"
-        )
-        .addEventListener(
-            "click",
-            adicionarPersonalizado
-        );
-
-    document
-        .getElementById(
-            "fechar-resultado"
-        )
-        .addEventListener(
-            "click",
-            () => {
-                document
-                    .getElementById(
-                        "resultado-overlay"
-                    )
-                    .classList.remove(
-                        "ativo"
-                    );
-            }
-        );
-
-    document
-        .getElementById(
-            "resultado-overlay"
-        )
-        .addEventListener(
-            "click",
-            evento => {
-                if (
-                    evento.target.id ===
-                    "resultado-overlay"
-                ) {
-                    evento.currentTarget
-                        .classList.remove(
-                            "ativo"
-                        );
-                }
-            }
-        );
+    mostrarResultado(
+        nome,
+        `Rolagem: ${resultados.join(" • ")}
+Resultado: ${maior}`
+    );
 }
 
-configurarRecursos();
-configurarEventos();
+function rolarPericia(nome) {
+    const atributo = pericias[nome].atributo;
+    const quantidade = atributoEfetivo(atributo);
+    const bonus = bonusPericia(nome);
+
+    const resultados = rolarMultiplosD20(quantidade);
+    const maior = Math.max(...resultados);
+
+    const total = maior + bonus;
+
+    mostrarResultado(
+        nome,
+        `Dados: ${resultados.join(" • ")}
+Maior dado: ${maior}
+Bônus: ${bonus >= 0 ? "+" : ""}${bonus}
+Resultado final: ${total}`
+    );
+}
+
+function rolarMultiplosD20(quantidade) {
+    const resultados = [];
+
+    for (let i = 0; i < quantidade; i++) {
+        resultados.push(d20());
+    }
+
+    return resultados;
+}
+
+function usarPoder(nome) {
+    const poder = poderesFixos[nome];
+
+    if (!poder) return;
+
+    if (!gastarPM(poder.custo)) {
+        return;
+    }
+
+    const ataque = rolarAtaque();
+
+    let dano = rolarDados(poder.dano);
+
+    let critico = false;
+
+    if (ataque === 20) {
+        critico = true;
+
+        if (poder.danoCritico) {
+            dano = rolarDados(poder.danoCritico);
+        } else {
+            dano = rolarCritico(poder.dano);
+        }
+    }
+
+    mostrarResultado(
+        nome,
+        `Ataque: ${ataque}
+${critico ? "CRÍTICO!" : "Ataque normal"}
+
+Dano: ${dano}`
+    );
+}
+
+function usarArma() {
+    const ataque = rolarAtaque();
+
+    const grupos = [
+        rolarDados("6d12"),
+        rolarDados("3d8")
+    ];
+
+    let dano = grupos.reduce((a, b) => a + b, 0);
+
+    let tipoCritico = "";
+
+    if (ataque === 20) {
+        tipoCritico = "CRÍTICO NATURAL";
+        dano += rolarDados("4d12");
+    } else if (ataque === 19) {
+        tipoCritico = "CRÍTICO DA ARMA";
+        dano += rolarDados("4d12");
+    }
+
+    if (estado.buffs.concentracao) {
+        dano += 20;
+    }
+
+    mostrarResultado(
+        "BAIXO ELÉTRICO MUITO AURA",
+        `Ataque: ${ataque}
+${tipoCritico || "Ataque normal"}
+
+Dano: ${dano}`
+    );
+}
+
+function rolarAtaque() {
+    const quantidade = atributoEfetivo("INT");
+    const resultados = rolarMultiplosD20(quantidade);
+
+    return Math.max(...resultados);
+}
+
+function gastarPM(custo) {
+    if (estado.pm < custo) {
+        estado.pm = 0;
+        estado.pv = 0;
+        estado.equalizeAcumulado = 0;
+
+        salvar();
+        atualizarInterface();
+
+        mostrarResultado(
+            "MANA INSUFICIENTE",
+            `O poder exigia ${custo} PM.
+
+Marcelo não possuía PM suficiente.
+
+PM: 0
+PV: 0`
+        );
+
+        return false;
+    }
+
+    estado.pm -= custo;
+
+    salvar();
+    atualizarInterface();
+
+    return true;
+}
+
+function rolarDados(expressao) {
+    const dados = parseDados(expressao);
+
+    if (!dados.length) {
+        return 0;
+    }
+
+    return dados.reduce((total, valor) => total + valor, 0);
+}
+
+function rolarCritico(expressao) {
+    const dados = parseDados(expressao);
+
+    if (!dados.length) return 0;
+
+    const lados = Number(expressao.match(/d(\d+)/i)?.[1] || 20);
+
+    let total = 0;
+
+    for (let i = 0; i < 5; i++) {
+        total += Math.floor(Math.random() * lados) + 1;
+    }
+
+    return rolarDados(expressao) + total;
+}
+
+function parseDados(expressao) {
+    const match = String(expressao)
+        .trim()
+        .match(/^(\d+)d(\d+)$/i);
+
+    if (!match) return [];
+
+    const quantidade = Number(match[1]);
+    const lados = Number(match[2]);
+
+    const resultados = [];
+
+    for (let i = 0; i < quantidade; i++) {
+        resultados.push(
+            Math.floor(Math.random() * lados) + 1
+        );
+    }
+
+    return resultados;
+}
+
+function d20() {
+    return Math.floor(Math.random() * 20) + 1;
+}
+
+function adicionarXP() {
+    const campo = document.getElementById("xp-input");
+    let quantidade = Number(campo.value);
+
+    if (!quantidade || quantidade <= 0) {
+        return;
+    }
+
+    estado.xp += quantidade;
+
+    while (
+        estado.nivel < 20 &&
+        estado.xp >= (xpPorNivel[estado.nivel + 1] || Infinity)
+    ) {
+        estado.xp -= xpPorNivel[estado.nivel + 1];
+        estado.nivel++;
+    }
+
+    salvar();
+    atualizarInterface();
+
+    campo.value = "";
+}
+
+function alternarBuff(nome) {
+    estado.buffs[nome] =
+        !estado.buffs[nome];
+
+    salvar();
+    atualizarInterface();
+}
+
+function adicionarHabilidade() {
+    const nome =
+        document.getElementById("habilidade-nome").value.trim();
+
+    const pericia =
+        document.getElementById("habilidade-pericia").value;
+
+    const bonus =
+        Number(document.getElementById("habilidade-bonus").value);
+
+    const descricao =
+        document.getElementById("habilidade-descricao").value.trim();
+
+    if (!nome || !pericia || Number.isNaN(bonus)) {
+        return;
+    }
+
+    estado.habilidades.push({
+        id: Date.now(),
+        nome,
+        pericia,
+        bonus,
+        descricao,
+        ativa: false
+    });
+
+    salvar();
+    atualizarInterface();
+
+    document.getElementById("habilidade-nome").value = "";
+    document.getElementById("habilidade-pericia").value = "";
+    document.getElementById("habilidade-bonus").value = "";
+    document.getElementById("habilidade-descricao").value = "";
+}
+
+function renderizarHabilidades() {
+    const lista =
+        document.getElementById("lista-habilidades");
+
+    lista.innerHTML = "";
+
+    estado.habilidades.forEach(habilidade => {
+        const elemento = document.createElement("article");
+
+        elemento.className =
+            `custom-item ${habilidade.ativa ? "ativo" : ""}`;
+
+        elemento.innerHTML = `
+            <div class="custom-item-top">
+                <div>
+                    <h3>${escapeHTML(habilidade.nome)}</h3>
+                    <p>${escapeHTML(habilidade.descricao || "Sem descrição.")}</p>
+                    <span>
+                        ${escapeHTML(habilidade.pericia)}
+                        ${habilidade.bonus >= 0 ? "+" : ""}
+                        ${habilidade.bonus}
+                    </span>
+                </div>
+
+                <div>
+                    <button onclick="alternarHabilidade(${habilidade.id})">
+                        ${habilidade.ativa ? "DESATIVAR" : "ATIVAR"}
+                    </button>
+
+                    <button onclick="removerHabilidade(${habilidade.id})">
+                        EXCLUIR
+                    </button>
+                </div>
+            </div>
+        `;
+
+        lista.appendChild(elemento);
+    });
+}
+
+function alternarHabilidade(id) {
+    const habilidade =
+        estado.habilidades.find(h => h.id === id);
+
+    if (!habilidade) return;
+
+    habilidade.ativa = !habilidade.ativa;
+
+    salvar();
+    atualizarInterface();
+}
+
+function removerHabilidade(id) {
+    estado.habilidades =
+        estado.habilidades.filter(h => h.id !== id);
+
+    salvar();
+    atualizarInterface();
+}
+
+function adicionarPoder() {
+    const nome =
+        document.getElementById("poder-nome").value.trim();
+
+    const dano =
+        document.getElementById("poder-dano").value.trim();
+
+    const custo =
+        Number(document.getElementById("poder-custo").value);
+
+    const descricao =
+        document.getElementById("poder-descricao").value.trim();
+
+    if (
+        !nome ||
+        !dano ||
+        Number.isNaN(custo)
+    ) {
+        return;
+    }
+
+    estado.poderesCustom.push({
+        id: Date.now(),
+        nome,
+        dano,
+        custo,
+        descricao
+    });
+
+    salvar();
+    atualizarInterface();
+
+    document.getElementById("poder-nome").value = "";
+    document.getElementById("poder-dano").value = "";
+    document.getElementById("poder-custo").value = "";
+    document.getElementById("poder-descricao").value = "";
+}
+
+function renderizarPoderesCustom() {
+    const lista =
+        document.getElementById("lista-poderes");
+
+    lista.innerHTML = "";
+
+    estado.poderesCustom.forEach(poder => {
+        const elemento = document.createElement("article");
+
+        elemento.className = "custom-item";
+
+        elemento.innerHTML = `
+            <div class="custom-item-top">
+                <div>
+                    <h3>${escapeHTML(poder.nome)}</h3>
+                    <p>${escapeHTML(poder.descricao || "Sem descrição.")}</p>
+                    <span>${escapeHTML(poder.dano)} • ${poder.custo} PM</span>
+                </div>
+
+                <div>
+                    <button onclick="usarPoderCustom(${poder.id})">
+                        USAR
+                    </button>
+
+                    <button onclick="removerPoder(${poder.id})">
+                        EXCLUIR
+                    </button>
+                </div>
+            </div>
+        `;
+
+        lista.appendChild(elemento);
+    });
+}
+
+function usarPoderCustom(id) {
+    const poder =
+        estado.poderesCustom.find(p => p.id === id);
+
+    if (!poder) return;
+
+    if (!gastarPM(poder.custo)) {
+        return;
+    }
+
+    const ataque = rolarAtaque();
+
+    let dano;
+
+    try {
+        dano = rolarDados(poder.dano);
+    } catch {
+        dano = 0;
+    }
+
+    let critico = false;
+
+    if (ataque === 20) {
+        critico = true;
+        dano += rolarDados(poder.dano);
+    }
+
+    if (estado.buffs.concentracao) {
+        dano += 20;
+    }
+
+    mostrarResultado(
+        poder.nome,
+        `Ataque: ${ataque}
+${critico ? "CRÍTICO!" : "Ataque normal"}
+
+Dano: ${dano}`
+    );
+}
+
+function removerPoder(id) {
+    estado.poderesCustom =
+        estado.poderesCustom.filter(p => p.id !== id);
+
+    salvar();
+    atualizarInterface();
+}
+
+function normalizar(texto) {
+    return texto
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+}
+
+function escapeHTML(texto) {
+    return String(texto)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function mostrarResultado(titulo, conteudo) {
+    document.getElementById("modal-titulo").textContent = titulo;
+
+    document.getElementById("modal-conteudo").innerHTML =
+        escapeHTML(conteudo).replaceAll("\n", "<br>");
+
+    document.getElementById("modal").classList.add("aberto");
+}
+
+function fecharModal() {
+    document.getElementById("modal").classList.remove("aberto");
+}
+
+document.getElementById("modal").addEventListener("click", event => {
+    if (event.target.id === "modal") {
+        fecharModal();
+    }
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        fecharModal();
+    }
+});
+
 atualizarInterface();
-renderizarPersonalizados();
