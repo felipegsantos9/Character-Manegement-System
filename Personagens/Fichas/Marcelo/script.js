@@ -75,26 +75,29 @@ const poderesFixos = {
     "Técnica Azul": {
         custo: 50,
         dano: "10d12",
-        critico: 20
+        critico: 20,
+        multiplicador: 2
     },
 
     "Técnica Vermelha": {
         custo: 50,
         dano: "10d12",
-        critico: 20
+        critico: 20,
+        multiplicador: 2
     },
 
     "Técnica Púrpura": {
         custo: 500,
         dano: "25d50",
-        critico: 20
+        critico: 20,
+        multiplicador: 2
     },
 
     "Amaterasu": {
         custo: 0,
         dano: "20d12",
-        danoCritico: "25d12",
-        critico: 20
+        critico: 20,
+        multiplicador: 5
     }
 };
 
@@ -461,53 +464,45 @@ function usarPoder(nome) {
 
     if (!poder) return;
 
-    if (!gastarPM(poder.custo)) {
-        return;
-    }
+    if (!gastarPM(poder.custo)) return;
 
     const ataque = rolarAtaque();
-
     let dano = rolarDados(poder.dano);
 
     let critico = false;
+    const multiplicador = poder.multiplicador || 2;
 
-    if (ataque === 20) {
+    if (ataque === poder.critico) {
         critico = true;
+        dano *= multiplicador;
+    }
 
-        if (poder.danoCritico) {
-            dano = rolarDados(poder.danoCritico);
-        } else {
-            dano = rolarCritico(poder.dano);
-        }
+    if (estado.buffs.concentracao) {
+        dano += 20;
     }
 
     mostrarResultado(
         nome,
         `Ataque: ${ataque}
-${critico ? "CRÍTICO!" : "Ataque normal"}
-
+${critico ? `CRÍTICO! Dano ×${multiplicador}` : "Ataque normal"}
 Dano: ${dano}`
     );
 }
 
 function usarArma() {
-    const ataque = rolarAtaque();
+    const resultados = rolarMultiplosD20(atributoEfetivo("INT"));
+    const ataque = Math.max(...resultados);
 
-    const grupos = [
-        rolarDados("6d12"),
-        rolarDados("3d8")
-    ];
+    const dano12 = rolarDados("6d12");
+    const dano8 = rolarDados("3d8");
+    let dano = dano12 + dano8;
 
-    let dano = grupos.reduce((a, b) => a + b, 0);
+    let critico = false;
+    const multiplicador = 4;
 
-    let tipoCritico = "";
-
-    if (ataque === 20) {
-        tipoCritico = "CRÍTICO NATURAL";
-        dano += rolarDados("4d12");
-    } else if (ataque === 19) {
-        tipoCritico = "CRÍTICO DA ARMA";
-        dano += rolarDados("4d12");
+    if (ataque === 19 || ataque === 20) {
+        critico = true;
+        dano *= multiplicador;
     }
 
     if (estado.buffs.concentracao) {
@@ -517,8 +512,7 @@ function usarArma() {
     mostrarResultado(
         "BAIXO ELÉTRICO MUITO AURA",
         `Ataque: ${ataque}
-${tipoCritico || "Ataque normal"}
-
+${critico ? `CRÍTICO! Dano ×${multiplicador}` : "Ataque normal"}
 Dano: ${dano}`
     );
 }
@@ -570,21 +564,6 @@ function rolarDados(expressao) {
     return dados.reduce((total, valor) => total + valor, 0);
 }
 
-function rolarCritico(expressao) {
-    const dados = parseDados(expressao);
-
-    if (!dados.length) return 0;
-
-    const lados = Number(expressao.match(/d(\d+)/i)?.[1] || 20);
-
-    let total = 0;
-
-    for (let i = 0; i < 5; i++) {
-        total += Math.floor(Math.random() * lados) + 1;
-    }
-
-    return rolarDados(expressao) + total;
-}
 
 function parseDados(expressao) {
     const match = String(expressao)
